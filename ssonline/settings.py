@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users'
+    'users',
+    'courses'
 ]
 # 修改配置文件，覆盖默认的User模型 appName.newModelName,使用引号
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -126,6 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+# 静态资源目录
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
