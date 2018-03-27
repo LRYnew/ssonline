@@ -15,6 +15,8 @@ import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 设置源目录
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # sys.path.insert(1, os.path.join(BASE_DIR, 'extra_apps'))
 
@@ -31,6 +33,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+# 登录验证规则
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
@@ -147,4 +150,3 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace("\\", "/")
-

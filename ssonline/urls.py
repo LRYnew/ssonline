@@ -15,12 +15,14 @@ Including another URLconf
 """
 import xadmin
 
+
 from django import views
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
 from .settings import MEDIA_ROOT
 from users.views import LoginView
+
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
