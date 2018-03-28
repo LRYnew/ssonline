@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'organization',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 # 修改配置文件，覆盖默认的User模型 appName.newModelName,使用引号
 AUTH_USER_MODEL = 'users.UserProfile'

@@ -17,11 +17,11 @@ import xadmin
 
 
 from django import views
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.views.generic import TemplateView
 
 from .settings import MEDIA_ROOT
-from users.views import LoginView
+from users.views import LoginView, RegisterView
 
 
 urlpatterns = [
@@ -30,5 +30,7 @@ urlpatterns = [
     url(r'^media/(?P<path>.*)$', views.static.serve, {'document_root': MEDIA_ROOT}),
     # 静态html模板
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
-    url(r'^login/$', LoginView.as_view(), name='login')
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^register/$', RegisterView.as_view(), name='register'),
+    url(r'^captcha/', include('captcha.urls'))
 ]

@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.views.generic.base import View
 
 from .models import UserProfile
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 
 
 # Create your views here.
@@ -45,8 +45,20 @@ class LoginView(View):
             return render(request, 'login.html', {"login_form": login_form})
 
 
-# 登录函数
+class RegisterView(View):
+    # 注册类
+    def get(self, request):
+        register_form = RegisterForm()
+        return render(request, 'register.html', {'register_form': register_form})
+
+    def post(self, request):
+        register_form = RegisterForm(request.POST)
+        if register_form.is_valid():
+            pass
+
+
 def user_login(request):
+    # 登录函数
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
