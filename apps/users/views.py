@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 
-from .models import UserProfile
+from .models import UserProfile, EmailVerifyCode
 from .forms import LoginForm, RegisterForm
 from utils.email_send import email_send
 
@@ -80,7 +80,19 @@ class RegisterView(View):
 
 
 class RegisterActiveView(View):
-    pass
+    # 注册激活
+    def get(self, request, active_code):
+        records = EmailVerifyCode.objects.filter(code=active_code)
+        if records.exists():
+            for record in records:
+                email = record.email
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+
+                return render(request, 'login.html')
+        else:
+            return render(request, '404.html')
 
 
 def user_login(request):

@@ -26,5 +26,6 @@ class RegisterForm(forms.Form):
         'min_length': u'密码不能小于6位数'
     })
     captcha = CaptchaField(error_messages={
+        'required': u'验证码必填',
         'invalid': u'验证码无效'
     })

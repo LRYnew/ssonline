@@ -27,6 +27,7 @@ def email_send(email, type='register'):
     email_record.code = code
     email_record.email = email
     email_record.send_type = type
+    email_record.save()
 
     email_title = ''
     email_body = ''
