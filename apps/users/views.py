@@ -3,9 +3,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
+from django.contrib.auth.hashers import make_password
 
 from .models import UserProfile
 from .forms import LoginForm, RegisterForm
+from utils.email_send import email_send
 
 
 # Create your views here.
@@ -37,8 +39,11 @@ class LoginView(View):
             password = request.POST.get('password', '')
             user = authenticate(username=username, password=password)
             if user is not None:
-                login(request, user)
-                return render(request, 'index.html', {})
+                if user.is_active:
+                    login(request, user)
+                    return render(request, 'index.html', {})
+                else:
+                    return render(request, 'login.html', {"msg": '用户未激活'})
             else:
                 return render(request, 'login.html', {"msg": '用户名或者密码错误'})
         else:
@@ -54,7 +59,28 @@ class RegisterView(View):
     def post(self, request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
-            pass
+            email = request.POST.get('email', '')
+            password = request.POST.get('password', '')
+            is_email = UserProfile.objects.filter(email=email, is_active=1).exists()
+            if not is_email:
+                user_profile = UserProfile()
+                user_profile.username = email
+                user_profile.email = email
+                user_profile.password = make_password(password)
+                user_profile.is_active = False
+                user_profile.save()
+
+                email_send(email=email, type='register')
+
+                return render(request, 'login.html')
+            else:
+                return render(request, 'register.html', {'msg': u'邮箱已经存在', 'register_form': register_form})
+        else:
+            return render(request, 'register.html', {'register_form': register_form})
+
+
+class RegisterActiveView(View):
+    pass
 
 
 def user_login(request):
