@@ -29,3 +29,26 @@ class RegisterForm(forms.Form):
         'required': u'验证码必填',
         'invalid': u'验证码无效'
     })
+
+
+class ForgetPwdForm(forms.Form):
+    # 找回密码验证
+    email = forms.EmailField(required=True, error_messages={
+        'required': u'邮箱必填'
+    })
+    captcha = CaptchaField(error_messages={
+        'required': u'验证码必填',
+        'invalid': u'验证码无效'
+    })
+
+
+class ResetPwdForm(forms.Form):
+    # 重置密码
+    password = forms.CharField(required=True, min_length=6, error_messages={
+        'required': u'密码必填',
+        'min_length': u'密码不能小于6位数'
+    })
+    password_again = forms.CharField(required=True, min_length=6, error_messages={
+        'required': u'密码必填',
+        'min_length': u'密码不能小于6位数'
+    })

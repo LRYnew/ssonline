@@ -21,7 +21,7 @@ from django.conf.urls import url, include
 from django.views.generic import TemplateView
 
 from .settings import MEDIA_ROOT
-from users.views import LoginView, RegisterView, RegisterActiveView
+from users.views import LoginView, RegisterView, RegisterActiveView, ForgetPwdView, ResetPwdView, ModifyPwdView
 
 
 urlpatterns = [
@@ -33,5 +33,8 @@ urlpatterns = [
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^captcha/', include('captcha.urls')),
-    url(r'^active/(?P<active_code>.*)/$', RegisterActiveView.as_view(), name='register_active')
+    url(r'^active/(?P<active_code>.*)/$', RegisterActiveView.as_view(), name='register_active'),
+    url(r'^forget/$', ForgetPwdView.as_view(), name='forget_pwd'),
+    url(r'^reset/(?P<reset_code>.*)/$', ResetPwdView.as_view(), name='reset_pwd'),
+    url(r'^modify/$', ModifyPwdView.as_view(), name='modify_pwd')
 ]

@@ -32,12 +32,19 @@ def email_send(email, type='register'):
     email_title = ''
     email_body = ''
 
-    if (type == 'register'):
+    if type == 'register':
         # 注册
         email_title = 'ss在线教育平台注册'
         email_body = '请点击链接进行激活: http://127.0.0.1:8000/active/{0}'.format(code)
 
         email_status = send_mail(email_title, email_body, DEFAULT_FROM_EMAIL, [email])
+        if email_status:
+            pass
+    elif type == 'forget':
+        # 找回密码
+        email_title = 'ss在线教育平台密码招呼'
+        email_body = '请点击链接进行密码找回: http://127.0.0.1:8000/reset/{0}'.format(code)
 
+        email_status = send_mail(email_title, email_body, DEFAULT_FROM_EMAIL, [email])
         if email_status:
             pass
