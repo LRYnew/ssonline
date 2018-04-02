@@ -15,14 +15,13 @@ Including another URLconf
 """
 import xadmin
 
-
 from django import views
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 
 from .settings import MEDIA_ROOT
 from users.views import LoginView, RegisterView, RegisterActiveView, ForgetPwdView, ResetPwdView, ModifyPwdView
-
+from organization.views import OrgView
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -36,5 +35,13 @@ urlpatterns = [
     url(r'^active/(?P<active_code>.*)/$', RegisterActiveView.as_view(), name='register_active'),
     url(r'^forget/$', ForgetPwdView.as_view(), name='forget_pwd'),
     url(r'^reset/(?P<reset_code>.*)/$', ResetPwdView.as_view(), name='reset_pwd'),
-    url(r'^modify/$', ModifyPwdView.as_view(), name='modify_pwd')
+    url(r'^modify/$', ModifyPwdView.as_view(), name='modify_pwd'),
+
+    # 机构
+    url(r'^org_list/$', OrgView.as_view(), name='org_list'),
+
+    # 教师
+    url(r'^teachers_list', TemplateView.as_view(template_name='teachers-list.html'), name='teachers_list'),
+    # 公开课
+    url(r'^course_list', TemplateView.as_view(template_name='course-list.html'), name='course_list'),
 ]
