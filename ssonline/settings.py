@@ -31,7 +31,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 # 登录验证规则
 AUTHENTICATION_BACKENDS = (
@@ -51,7 +50,8 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
-    'captcha'
+    'captcha',
+    'pure_pagination'
 ]
 # 修改配置文件，覆盖默认的User模型 appName.newModelName,使用引号
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -80,13 +80,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+                # 'django.core.context_processors.media',python3会报错
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'ssonline.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -101,7 +102,6 @@ DATABASES = {
         'PORT': '3306'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -121,7 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -137,7 +136,6 @@ USE_L10N = True
 
 # True: 数据库存储会采用国际时间UTC，否则采用本地时间
 USE_TZ = False
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -160,3 +158,10 @@ EMAIL_HOST_PASSWORD = 'vejkmdubvzqvbggf'
 EMAIL_USE_TLS = True
 # EMAIL_FROM = 'YJob12138@foxmail.com'
 DEFAULT_FROM_EMAIL = 'YJob12138@foxmail.com'
+
+# 分页设置
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 3,
+    'MARGIN_PAGES_DISPLAYED': 2,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True
+}
