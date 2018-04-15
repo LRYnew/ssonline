@@ -21,7 +21,6 @@ from django.views.generic import TemplateView
 
 from .settings import MEDIA_ROOT
 from users.views import LoginView, RegisterView, RegisterActiveView, ForgetPwdView, ResetPwdView, ModifyPwdView
-from organization.views import OrgView
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -38,7 +37,7 @@ urlpatterns = [
     url(r'^modify/$', ModifyPwdView.as_view(), name='modify_pwd'),
 
     # 机构
-    url(r'^org_list/$', OrgView.as_view(), name='org_list'),
+    url(r'^org/', include('organization.urls', namespace='org')),
 
     # 教师
     url(r'^teachers_list', TemplateView.as_view(template_name='teachers-list.html'), name='teachers_list'),

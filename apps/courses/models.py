@@ -3,9 +3,13 @@ from datetime import datetime
 
 from django.db import models
 
+from organization.models import CourseOrg, Teacher
+
 
 # 课程类
 class Course(models.Model):
+    course_org = models.ForeignKey(CourseOrg, verbose_name=u'机构', null=True, blank=True)
+    teacher = models.ForeignKey(Teacher, verbose_name=u'授课教师', null=True, blank=True)
     name = models.CharField(verbose_name=u'课程名', max_length=20)
     desc = models.CharField(verbose_name=u'课程描述', max_length=150)
     degree = models.CharField(verbose_name=u'难度等级', max_length=10,

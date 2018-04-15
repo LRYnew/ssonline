@@ -1,0 +1,47 @@
+{% extends 'org_base.html' %}
+{% load staticfiles %}
+{% block title %}课程机构课程{% endblock %}
+{% block bread %}机构课程{% endblock %}
+{% block right %}
+  <div class="right companycenter layout">
+    <div class="head">
+      <h1>机构课程</h1>
+    </div>
+    <div class="brief group_list">
+      {% for course in all_course.object_list %}
+        <div class="module1_5 box">
+          <a class="comp-img-box" href="course-detail.html">
+            <img width="214" height="195" src="{{ MEDIA_URL }}{{ course.image }}"/>
+          </a>
+          <div class="des">
+            <a href="course-detail.html"><h2>{{ course.name }}</h2></a>
+            <span class="fl">课时：<i class="key">{{ course_learn_time }}</i></span>
+            <span class="fr">学习人数：{{ students }}</span>
+          </div>
+          <div class="bottom">
+            <span class="fl">{{ item.course_org }}</span>
+            <span class="star fr  notlogin" data-favid="13" data-fav-type="4">{{ item.fov_nums }}</span>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="pageturn">
+      <ul class="pagelist">
+        {% for page in all_course.pages %}
+          {% if page %}
+            {% ifequal page all_course.number %}
+              <li class="active"><a
+                  href="?page={{ page }}&ct={{ category }}&city={{ city }}&sort={{ sort }}">{{ page }}</a></li>
+            {% else %}
+              <li><a href="?page={{ page }}&ct={{ category }}&city={{ city }}&sort={{ sort }}"
+                     class="page">{{ page }}</a>
+              </li>
+            {% endifequal %}
+          {% else %}
+            <li class="active"><a href="?page=1">1</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
