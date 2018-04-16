@@ -41,6 +41,7 @@ urlpatterns = [
 
     # 教师
     url(r'^teachers_list', TemplateView.as_view(template_name='teachers-list.html'), name='teachers_list'),
-    # 公开课
-    url(r'^course_list', TemplateView.as_view(template_name='course-list.html'), name='course_list'),
+
+    # 课程
+    url(r'^course/', include('courses.urls', namespace='course'))
 ]

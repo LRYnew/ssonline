@@ -14,6 +14,7 @@ from operation.models import UserFavorite
 class OrgView(View):
     # 课程列表
     def get(self, request):
+        current_page = 'org'
         all_city = CityDict.objects.all()
         all_org = CourseOrg.objects.all()
 
@@ -62,7 +63,8 @@ class OrgView(View):
             'city': city,
             'category': category,
             'sort': sort,
-            'host_org': host_org
+            'host_org': host_org,
+            'current_page': current_page
         })
 
 
