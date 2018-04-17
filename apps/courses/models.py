@@ -19,6 +19,8 @@ class Course(models.Model):
     fov_nums = models.IntegerField(verbose_name=u'收藏数', default=0)
     click_nums = models.IntegerField(verbose_name=u'点击数', default=0)
     image = models.ImageField(verbose_name=u'封面', upload_to='courses/%Y/%m', max_length=100)
+    category = models.CharField(verbose_name=u'课程类别', max_length=100, default=u'后端开发')
+    tag = models.CharField(verbose_name=u'课程标签', max_length=100, default='')
     # 课程详情为富文本形式
     detail = models.TextField(verbose_name=u'课程详情')
     add_time = models.DateTimeField(verbose_name=u'添加时间', default=datetime.now)
@@ -26,6 +28,14 @@ class Course(models.Model):
     class Meta:
         verbose_name = '课程信息'
         verbose_name_plural = verbose_name
+
+    def get_zj_nums(self):
+        # 章节
+        return self.lesson_set.all().count()
+
+    def get_learn_user(self):
+        # 学习用户
+        return self.usercourse_set.all()[:5]
 
     def __str__(self):
         return self.name

@@ -3,6 +3,7 @@ from django.views import View
 
 from pure_pagination import PageNotAnInteger, EmptyPage, Paginator
 from .models import Course
+from operation.models import UserFavorite
 
 
 class CourseListView(View):
@@ -38,4 +39,35 @@ class CourseListView(View):
             'sort': sort,
             'current_page': current_page,
             'host_course': host_course
+        })
+
+
+class CourseDetailView(View):
+    # 课程详情
+    def get(self, request, course_id):
+        course_fav = False
+        org_fav = False
+        course = Course.objects.get(id=int(course_id))
+        course.click_nums += 1
+        course.save()
+
+        # 相关课程
+        tag = course.tag
+        if tag:
+            relate_course = Course.objects.filter(tag=tag)[:1]
+        else:
+            relate_course = []
+
+        # 获取收藏
+        if request.user.is_authenticated():
+            if UserFavorite.objects.filter(user=request.user, fav_id=course.id, fav_type=1):
+                course_fav = True
+            if UserFavorite.objects.filter(user=request.user, fav_id=course.course_org.id, fav_type=2):
+                org_fav = True
+
+        return render(request, 'course-detail.html', {
+            'course': course,
+            'relate_course': relate_course,
+            'course_fav': course_fav,
+            'org_fav': org_fav
         })
